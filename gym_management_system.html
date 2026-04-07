@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gym Management System</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css');
 
 :root {
   /* Light Mode (Exclusively) - Material */
@@ -277,8 +277,30 @@ tbody tr:hover td { background-color: var(--bg-input); }
 
 /* Utility */
 .mb-4 { margin-bottom: 16px; } .mb-6 { margin-bottom: 24px; } .mt-4 { margin-top: 16px; }
+.mt-2 { margin-top: 8px; } .mr-2 { margin-right: 8px; }
 .flex { display: flex; } .gap-4 { gap: 16px; } .items-center { align-items: center; }
 .justify-between { justify-content: space-between; } .w-full { width: 100%; }
+.text-secondary { color: var(--text-secondary); } .text-left { text-align: left; }
+.p-4 { padding: 16px; }
+
+/* Status badge suspended */
+.status-suspended { color: var(--warning); }
+
+/* Login error */
+.error-text { color: var(--danger); font-size: 13px; margin-top: 8px; display: none; }
+
+/* Header left flex */
+.header-left { display: flex; align-items: center; }
+
+/* Mobile sidebar */
+@media (max-width: 768px) {
+  .sidebar { position: fixed; left: -260px; top: 0; bottom: 0; transition: left 0.3s; }
+  .sidebar.mobile-open { left: 0; }
+  .grid-cols-2, .grid-cols-3 { grid-template-columns: 1fr; }
+  .grid-cols-4 { grid-template-columns: repeat(2, 1fr); }
+  .content-area { padding: 16px; }
+  .header { padding: 0 16px; }
+}
 
 /* Filter Bar */
 .filter-bar { display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
@@ -319,6 +341,9 @@ tbody tr:hover td { background-color: var(--bg-input); }
 @media (max-width: 1024px) {
   .grid-cols-4 { grid-template-columns: repeat(2, 1fr); }
   .schedule-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+  .grid-cols-2, .grid-cols-3 { grid-template-columns: 1fr; }
 }
 @media print { body * { visibility: hidden; } #invoice-print-area, #invoice-print-area * { visibility: visible; } #invoice-print-area { position: absolute; left: 0; top: 0; width: 100%; box-shadow:none; } }
 
@@ -583,6 +608,7 @@ tbody tr:hover td { background-color: var(--bg-input); }
                       <th>Date</th>
                       <th>Check-In</th>
                       <th>Check-Out</th>
+                      <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody></tbody>
@@ -1121,6 +1147,7 @@ const Shop = {
     items.forEach((i, idx) => {
        c.innerHTML += `<div class="card pos-item-card" style="position:relative" onclick="Shop.addToCart('${i.id}')">
          <button class="btn btn-danger btn-icon" style="position:absolute; top:8px; right:8px; width:24px; height:24px; font-size:10px" onclick="event.stopPropagation(); Shop.deleteItem('${i.id}')"><i class="fa-solid fa-trash"></i></button>
+         <button class="btn btn-secondary btn-icon" style="position:absolute; top:8px; left:8px; width:24px; height:24px; font-size:10px" onclick="event.stopPropagation(); Shop.editItem('${i.id}')"><i class="fa-solid fa-pen"></i></button>
          <i class="fa-solid fa-box" style="margin-top:8px"></i>
          <div style="font-weight:600">${i.name}</div>
          <div style="color:var(--text-secondary); font-size:12px;">Stock: ${i.stock}</div>
@@ -1183,14 +1210,27 @@ const Shop = {
      Dashboard.render();
      Payments.render();
   },
-  openAddItemModal: () => { document.getElementById('item-form').reset(); UI.openModal('add-item-modal'); },
+  openAddItemModal: () => { document.getElementById('item-form').reset(); document.getElementById('item-id').value = ''; UI.openModal('add-item-modal'); },
   saveItem: () => {
     if(!document.getElementById('item-form').checkValidity()) { UI.toast('Fill required fields', 'error'); return;}
     const items = DB.get('gymInventory');
-    items.push({ id: DB.generateId(), name: document.getElementById('item-name').value, price: parseFloat(document.getElementById('item-price').value), stock: parseInt(document.getElementById('item-stock').value) });
+    const id = document.getElementById('item-id').value || DB.generateId();
+    const obj = { id, name: document.getElementById('item-name').value, price: parseFloat(document.getElementById('item-price').value), stock: parseInt(document.getElementById('item-stock').value) };
+    if(!document.getElementById('item-id').value) items.push(obj);
+    else Object.assign(items.find(x=>x.id===id), obj);
     DB.set('gymInventory', items);
-    UI.closeModal('add-item-modal'); UI.toast('Item added');
+    UI.closeModal('add-item-modal'); UI.toast('Item saved');
     Shop.render();
+  },
+  editItem: (id) => {
+    const it = DB.get('gymInventory').find(x=>x.id===id);
+    if(!it) return;
+    document.getElementById('item-form').reset();
+    document.getElementById('item-id').value = it.id;
+    document.getElementById('item-name').value = it.name;
+    document.getElementById('item-price').value = it.price;
+    document.getElementById('item-stock').value = it.stock;
+    UI.openModal('add-item-modal');
   }
 };
 
@@ -1202,10 +1242,14 @@ const Classes = {
         const col = document.getElementById('sched-'+d);
         if(!col) return;
         col.innerHTML = `<div class="day-header">${d}</div>` + cls.filter(c=>c.day===d).sort((a,b)=>a.time.localeCompare(b.time)).map(c => `
-           <div class="class-card mt-2" style="--class-color:${c.color||'#6c63ff'}" onclick="Classes.deletePrompt('${c.id}')">
+           <div class="class-card mt-2" style="--class-color:${c.color||'#6c63ff'}">
              <div style="font-weight:700">${c.name}</div>
              <div style="color:var(--text-secondary); font-size:12px">${c.time}</div>
              <div style="font-size:11px; margin-top:4px"><i class="fa-solid fa-user-ninja"></i> ${c.trainer||'TBA'}</div>
+             <div style="display:flex; gap:6px; margin-top:8px; justify-content:center;">
+               <button class="btn btn-secondary btn-sm" style="padding:4px 8px; font-size:11px;" onclick="Classes.edit('${c.id}')"><i class="fa-solid fa-pen"></i></button>
+               <button class="btn btn-danger btn-sm" style="padding:4px 8px; font-size:11px;" onclick="Classes.deletePrompt('${c.id}')"><i class="fa-solid fa-trash"></i></button>
+             </div>
            </div>
         `).join('');
      });
@@ -1214,9 +1258,12 @@ const Classes = {
   save: () => {
     if(!document.getElementById('class-form').checkValidity()) { UI.toast('Fill details', 'error'); return; }
     const cls = DB.get('gymClasses');
-    cls.push({ id: DB.generateId(), name: document.getElementById('class-name').value, day: document.getElementById('class-day').value, time: document.getElementById('class-time').value, trainer: document.getElementById('class-trainer').value, color: document.getElementById('class-color').value });
+    const id = document.getElementById('class-id').value || DB.generateId();
+    const obj = { id, name: document.getElementById('class-name').value, day: document.getElementById('class-day').value, time: document.getElementById('class-time').value, trainer: document.getElementById('class-trainer').value, color: document.getElementById('class-color').value };
+    if(!document.getElementById('class-id').value) cls.push(obj);
+    else Object.assign(cls.find(c=>c.id===id), obj);
     DB.set('gymClasses', cls);
-    UI.closeModal('add-class-modal'); UI.toast('Class scheduled');
+    UI.closeModal('add-class-modal'); UI.toast('Class saved');
     Classes.render();
   },
   deletePrompt: (id) => {
@@ -1224,6 +1271,17 @@ const Classes = {
        DB.set('gymClasses', DB.get('gymClasses').filter(c=>c.id!==id));
        UI.toast('Class removed'); Classes.render();
     });
+  },
+  edit: (id) => {
+    const c = DB.get('gymClasses').find(x=>x.id===id);
+    if(!c) return;
+    Classes.openAddModal();
+    document.getElementById('class-id').value = c.id;
+    document.getElementById('class-name').value = c.name;
+    document.getElementById('class-day').value = c.day;
+    document.getElementById('class-time').value = c.time;
+    document.getElementById('class-trainer').value = c.trainer || '';
+    document.getElementById('class-color').value = c.color || '#6c63ff';
   }
 };
 
@@ -1321,6 +1379,13 @@ const Members = {
     const search = document.getElementById('member-search').value.toLowerCase();
     const st = document.getElementById('member-filter-status').value;
     const pl = document.getElementById('member-filter-plan').value;
+
+    // Populate plan filter if empty
+    const pm = document.getElementById('member-filter-plan');
+    if(pm.options.length <= 1) {
+      const plans = DB.get('gymPlans');
+      pm.innerHTML = '<option value="All">All Plans</option>' + plans.map(p=>`<option>${p.name}</option>`).join('');
+    }
     
     let filtered = mems.filter(m => {
       let match = true;
@@ -1368,11 +1433,6 @@ const Members = {
     const plans = DB.get('gymPlans');
     const sel = document.getElementById('mem-plan');
     sel.innerHTML = plans.map(p => `<option value="${p.name}" data-dur="${p.duration}">${p.name}</option>`).join('');
-    
-    const pm = document.getElementById('member-filter-plan');
-    if(pm.options.length <= 1) {
-       pm.innerHTML = '<option value="All">All Plans</option>' + plans.map(p=>`<option>${p.name}</option>`).join('');
-    }
     
     document.getElementById('mem-start').value = new Date().toISOString().split('T')[0];
     Members.autoCalcEndDate();
@@ -1993,7 +2053,11 @@ const App = {
 
     // Sidebar toggle
     document.getElementById('menu-toggle').onclick = () => {
-       document.getElementById('sidebar').classList.toggle('mobile-open');
+       if(window.innerWidth <= 768) {
+         document.getElementById('sidebar').classList.toggle('mobile-open');
+       } else {
+         document.getElementById('sidebar').classList.toggle('collapsed');
+       }
     };
     
     // Routing manually using buttons
