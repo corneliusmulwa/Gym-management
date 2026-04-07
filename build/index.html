@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gym Management System</title>
+  <style id="injected-style"></style>
+</head>
+<body>
+
+  <!-- Auth View -->
+  <div id="auth-view">
+    <div class="login-card" id="login-card">
+      <div class="logo" style="margin-bottom: 24px;"><img src="data:image/webp;base64,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" style="width: 80px; height: 80px; border-radius: 20px; object-fit: cover; box-shadow: var(--shadow-outset); border: 2px solid var(--border);"></div>
+      <h2 id="auth-title">Gym Admin Login</h2>
+      <p class="subtitle" id="auth-subtitle">Welcome back. Please enter your details.</p>
+      <form id="login-form">
+        <div class="form-group">
+          <label>Username</label>
+          <input type="text" id="login-user" class="form-control" value="admin" required>
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <div style="position: relative;">
+            <input type="password" id="login-pass" class="form-control" value="gym@2024" required>
+            <i class="fa-solid fa-eye" id="toggle-password" style="position:absolute; right:12px; top:12px; cursor:pointer; color:var(--text-muted)"></i>
+          </div>
+        </div>
+        <div class="form-group" style="display:flex; align-items:center; gap:8px;">
+          <input type="checkbox" id="login-remember">
+          <label style="margin:0;">Remember me</label>
+        </div>
+        <button type="submit" class="btn btn-primary mb-4">Login</button>
+        <div class="error-text" id="login-error">Invalid credentials</div>
+      </form>
+    </div>
+  </div>
+
+  <!-- App View -->
+  <div id="app-view">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <img src="data:image/webp;base64,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" style="width: 36px; height: 36px; border-radius: 8px; margin-right: 12px; object-fit: cover;">
+        <span class="nav-text" id="sidebar-gym-name">FitFlex Gym</span>
+      </div>
+      <nav class="sidebar-nav">
+        <a class="nav-item active" data-target="dashboard">
+          <i class="fa-solid fa-gauge-high"></i>
+          <span class="nav-text">Dashboard</span>
+        </a>
+        <a class="nav-item" data-target="members">
+          <i class="fa-solid fa-users"></i>
+          <span class="nav-text">Members</span>
+        </a>
+        <a class="nav-item" data-target="plans">
+          <i class="fa-solid fa-id-card"></i>
+          <span class="nav-text">Membership Plans</span>
+        </a>
+        <a class="nav-item" data-target="attendance">
+          <i class="fa-solid fa-calendar-check"></i>
+          <span class="nav-text">Attendance</span>
+        </a>
+        <a class="nav-item" data-target="payments">
+          <i class="fa-solid fa-credit-card"></i>
+          <span class="nav-text">Payments</span>
+        </a>
+        <a class="nav-item" data-target="classes">
+          <i class="fa-solid fa-person-chalkboard"></i>
+          <span class="nav-text">Classes</span>
+        </a>
+        <a class="nav-item" data-target="shop">
+          <i class="fa-solid fa-cart-shopping"></i>
+          <span class="nav-text">Store POS</span>
+        </a>
+        <a class="nav-item" data-target="notifications">
+          <i class="fa-solid fa-bell"></i>
+          <span class="nav-text">Notifications</span>
+          <span class="badge" id="nav-badge-notifications" style="display:none">0</span>
+        </a>
+        <a class="nav-item" data-target="settings">
+          <i class="fa-solid fa-gear"></i>
+          <span class="nav-text">Settings</span>
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+      <!-- Header -->
+      <header class="header">
+        <div class="header-left">
+          <button class="menu-toggle" id="menu-toggle"><i class="fa-solid fa-bars"></i></button>
+          <div class="page-title" id="page-title">Dashboard</div>
+        </div>
+        <div class="header-right">
+          <!-- Theme toggle removed -->
+          <div class="notification-bell" onclick="App.navigate('notifications')">
+            <i class="fa-solid fa-bell"></i>
+            <span class="badge" id="header-badge-notifications" style="display:none">0</span>
+          </div>
+          <div class="user-profile">
+            <div class="avatar" id="header-avatar">A</div>
+            <span style="font-weight:500;" id="header-admin-name">Admin</span>
+            <button class="logout-btn" id="logout-btn" title="Logout"><i class="fa-solid fa-right-from-bracket"></i></button>
+          </div>
+        </div>
+      </header>
+
+      <!-- Content Area -->
+      <main class="content-area">
+        
+        <!-- DASHBOARD -->
+        <section id="section-dashboard" class="section active">
+          <div class="grid grid-cols-4 mb-6">
+            <div class="card kpi-card">
+              <div class="kpi-icon"><i class="fa-solid fa-users"></i></div>
+              <div class="kpi-content">
+                <div class="kpi-label">Total Members</div>
+                <div class="kpi-value" id="kpi-total-members">0</div>
+                <div class="kpi-badge">+0% vs last month</div>
+              </div>
+            </div>
+            <div class="card kpi-card">
+              <div class="kpi-icon"><i class="fa-solid fa-id-card-clip"></i></div>
+              <div class="kpi-content">
+                <div class="kpi-label">Active Memberships</div>
+                <div class="kpi-value" id="kpi-active-memberships">0</div>
+              </div>
+            </div>
+            <div class="card kpi-card">
+              <div class="kpi-icon"><i class="fa-solid fa-dollar-sign"></i></div>
+              <div class="kpi-content">
+                <div class="kpi-label">Monthly Revenue</div>
+                <div class="kpi-value" id="kpi-monthly-rev">Ksh 0</div>
+              </div>
+            </div>
+            <div class="card kpi-card">
+              <div class="kpi-icon"><i class="fa-solid fa-clock"></i></div>
+              <div class="kpi-content">
+                <div class="kpi-label">Today's Attendance</div>
+                <div class="kpi-value" id="kpi-today-att">0</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="grid grid-cols-2 mb-6">
+            <div class="card">
+              <h3 class="mb-4">Monthly Revenue (Last 6 Months)</h3>
+              <canvas id="revChart"></canvas>
+            </div>
+            <div class="card">
+              <h3 class="mb-4">Member Growth (Last 6 Months)</h3>
+              <canvas id="growthChart"></canvas>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3 class="mb-4">Recent Payments</h3>
+            <div class="table-container">
+              <table id="dash-payments-table">
+                <thead>
+                  <tr>
+                    <th>Member</th>
+                    <th>Plan</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- MEMBERS -->
+        <section id="section-members" class="section">
+          <div class="flex justify-between items-center mb-6">
+            <h2>Members</h2>
+            <button class="btn btn-primary" style="width:auto" onclick="Members.openAddModal()"><i class="fa-solid fa-plus mr-2"></i> Add Member</button>
+          </div>
+          <div class="card">
+            <div class="filter-bar">
+              <input type="text" class="form-control" id="member-search" placeholder="Search by name, phone...">
+              <select class="form-control" id="member-filter-status">
+                <option value="All">All Status</option>
+                <option value="Active">Active</option>
+                <option value="Expired">Expired</option>
+                <option value="Suspended">Suspended</option>
+              </select>
+              <select class="form-control" id="member-filter-plan">
+                <option value="All">All Plans</option>
+              </select>
+            </div>
+            <div class="table-container">
+              <table id="members-table">
+                <thead>
+                  <tr>
+                    <th>Member</th>
+                    <th>Contact</th>
+                    <th>Plan</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+            <div class="flex justify-between items-center mt-4">
+              <button class="btn btn-secondary btn-sm" id="mem-prev">Previous</button>
+              <span id="mem-page-info" style="font-size:14px;">Page 1 of 1</span>
+              <button class="btn btn-secondary btn-sm" id="mem-next">Next</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- PLANS -->
+        <section id="section-plans" class="section">
+          <div class="flex justify-between items-center mb-6">
+            <h2>Membership Plans</h2>
+            <button class="btn btn-primary" style="width:auto" onclick="Plans.openPlanModal()"><i class="fa-solid fa-plus"></i> Add Plan</button>
+          </div>
+          <div class="grid grid-cols-4" id="plans-container"></div>
+        </section>
+
+        <!-- ATTENDANCE -->
+        <section id="section-attendance" class="section">
+          <div class="tabs">
+            <div class="tab active" data-tab="att-mark">Mark Attendance</div>
+            <div class="tab" data-tab="att-history">History</div>
+            <div class="tab" data-tab="att-report">Member Report</div>
+          </div>
+          
+          <div id="att-mark" class="tab-content active">
+            <div class="flex justify-between items-center mb-6">
+              <div class="flex gap-4 items-center">
+                <input type="date" class="form-control" id="att-date-picker">
+                <button class="btn btn-secondary" onclick="Attendance.setDateToToday()">Today</button>
+                <input type="text" class="form-control" id="att-search" placeholder="Search Member...">
+              </div>
+              <div class="flex gap-4">
+                <button class="btn btn-primary" style="width:auto" onclick="Attendance.markAll()">Mark All</button>
+                <button class="btn btn-danger" style="width:auto" onclick="Attendance.clearAll()">Clear All</button>
+              </div>
+            </div>
+            <div class="grid grid-cols-4" id="att-mark-grid"></div>
+          </div>
+
+          <div id="att-history" class="tab-content">
+            <div class="card mb-4 filter-bar">
+              <input type="date" class="form-control" id="hist-date-from">
+              <input type="date" class="form-control" id="hist-date-to">
+              <button class="btn btn-primary" style="width:auto" onclick="Attendance.loadHistory()">Filter</button>
+              <button class="btn btn-secondary" style="width:auto" onclick="Attendance.exportCSV()">Export CSV</button>
+            </div>
+            <div class="card">
+              <div class="table-container">
+                <table id="att-history-table">
+                  <thead>
+                    <tr>
+                      <th>Member</th>
+                      <th>Date</th>
+                      <th>Check-In</th>
+                      <th>Check-Out</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div id="att-report" class="tab-content">
+            <div class="card">
+              <div class="mb-4">
+                <select class="form-control" id="report-member-select" onchange="Attendance.loadReport()">
+                  <option value="">Select Member...</option>
+                </select>
+              </div>
+              <div id="att-report-content" style="display:none;">
+                <div class="grid grid-cols-4 mb-4">
+                  <div class="card kpi-card" style="padding:16px"><div class="kpi-content"><div class="kpi-label">Total Sessions</div><div class="kpi-value" id="rep-total">0</div></div></div>
+                  <div class="card kpi-card" style="padding:16px"><div class="kpi-content"><div class="kpi-label">Month Attendance</div><div class="kpi-value" id="rep-rate">0%</div></div></div>
+                </div>
+                <!-- Placeholder for calendar visual -->
+                <div style="background:var(--bg-input); padding:20px; border-radius:8px; text-align:center;">
+                   (Calendar view simplified for vanilla list representation)
+                   <div id="rep-list" class="mt-4 text-left"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- PAYMENTS -->
+        <section id="section-payments" class="section">
+          <div class="grid grid-cols-4 mb-6">
+            <div class="card kpi-card"><div class="kpi-icon"><i class="fa-solid fa-sack-dollar"></i></div><div class="kpi-content"><div class="kpi-label">Total Revenue</div><div class="kpi-value" id="pay-total-rev">Ksh 0</div></div></div>
+            <div class="card kpi-card"><div class="kpi-icon"><i class="fa-solid fa-chart-line"></i></div><div class="kpi-content"><div class="kpi-label">This Month</div><div class="kpi-value" id="pay-month-rev">Ksh 0</div></div></div>
+            <div class="card kpi-card"><div class="kpi-icon" style="color:var(--warning)"><i class="fa-solid fa-hourglass-half"></i></div><div class="kpi-content"><div class="kpi-label">Pending Total</div><div class="kpi-value" id="pay-pending">Ksh 0</div></div></div>
+            <div class="card kpi-card"><div class="kpi-icon" style="color:var(--danger)"><i class="fa-solid fa-triangle-exclamation"></i></div><div class="kpi-content"><div class="kpi-label">Overdue</div><div class="kpi-value" id="pay-overdue">0</div></div></div>
+          </div>
+          
+          <div class="flex justify-between items-center mb-6">
+            <h2>Payments & Billing</h2>
+            <button class="btn btn-primary" style="width:auto" onclick="Payments.openAddModal()"><i class="fa-solid fa-plus"></i> Record Payment</button>
+          </div>
+
+          <div class="card">
+            <div class="filter-bar">
+              <input type="text" class="form-control" id="pay-search" placeholder="Search invoice or member...">
+              <select class="form-control" id="pay-filter-status">
+                <option value="All">All Status</option>
+                <option value="Paid">Paid</option>
+                <option value="Pending">Pending</option>
+                <option value="Overdue">Overdue</option>
+              </select>
+            </div>
+            <div class="table-container">
+              <table id="payments-table">
+                <thead>
+                  <tr>
+                    <th>Invoice #</th>
+                    <th>Member</th>
+                    <th>Plan</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- SHOP & POS -->
+        <section id="section-shop" class="section">
+          <div class="flex justify-between items-center mb-6">
+            <h2>Store POS & Inventory</h2>
+            <button class="btn btn-primary" style="width:auto" onclick="Shop.openAddItemModal()"><i class="fa-solid fa-plus"></i> Add Item</button>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <div class="card" style="height:100%;"><h3 class="mb-4">Inventory</h3>
+                <div class="grid grid-cols-3 gap-4" id="shop-items-grid"></div>
+              </div>
+            </div>
+            <div>
+              <div class="card" style="height:100%;"><h3 class="mb-4">Current Cart</h3>
+                <div id="shop-cart-list" class="mb-4" style="min-height:200px"></div>
+                <div style="font-size:24px; font-weight:700; text-align:right" class="mb-4">Total: <span id="shop-cart-total" style="color:var(--accent)">Ksh 0</span></div>
+                <button class="btn btn-success w-full" onclick="Shop.checkout()">Process Sale</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- CLASSES -->
+        <section id="section-classes" class="section">
+          <div class="flex justify-between items-center mb-6">
+            <h2>Class Schedule</h2>
+            <button class="btn btn-primary" style="width:auto" onclick="Classes.openAddModal()"><i class="fa-solid fa-plus"></i> Add Class</button>
+          </div>
+          <div class="card mb-6">
+            <h3 class="mb-4">Weekly Overview</h3>
+            <div class="schedule-grid">
+              <div class="day-col" id="sched-Mon"><div class="day-header">Mon</div></div>
+              <div class="day-col" id="sched-Tue"><div class="day-header">Tue</div></div>
+              <div class="day-col" id="sched-Wed"><div class="day-header">Wed</div></div>
+              <div class="day-col" id="sched-Thu"><div class="day-header">Thu</div></div>
+              <div class="day-col" id="sched-Fri"><div class="day-header">Fri</div></div>
+              <div class="day-col" id="sched-Sat"><div class="day-header">Sat</div></div>
+              <div class="day-col" id="sched-Sun"><div class="day-header">Sun</div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- NOTIFICATIONS -->
+        <section id="section-notifications" class="section">
+          <div class="flex justify-between items-center mb-6">
+            <h2>Notifications</h2>
+            <button class="btn btn-secondary" style="width:auto" onclick="Notifications.markAllRead()">Mark all as read</button>
+          </div>
+          <div id="notifications-container" class="grid grid-cols-1"></div>
+        </section>
+
+        <!-- SETTINGS -->
+        <section id="section-settings" class="section">
+          <h2>Settings</h2>
+          <div class="tabs mt-4">
+            <div class="tab active" data-tab="set-gym">Gym Profile</div>
+            <div class="tab" data-tab="set-admin">Admin Management</div>
+            <div class="tab" data-tab="set-data">Data Management</div>
+          </div>
+          <div class="card">
+            <div id="set-gym" class="tab-content active form-wrapper" style="max-width:500px;">
+              <div class="form-group"><label>Gym Name</label><input type="text" class="form-control" id="set-gym-name"></div>
+              <div class="form-group"><label>Tagline</label><input type="text" class="form-control" id="set-gym-tag"></div>
+              <div class="form-group"><label>Currency Symbol</label><input type="text" class="form-control" id="set-gym-curr"></div>
+              <button class="btn btn-primary" onclick="Settings.saveGym()">Save Changes</button>
+            </div>
+            <div id="set-admin" class="tab-content" style="max-width:800px;">
+              <div class="flex justify-between items-center mb-4">
+                <h3>System Administrators (Max 4)</h3>
+                <button class="btn btn-primary btn-sm" id="btn-add-admin" onclick="Settings.openAdminModal()" style="width:auto"><i class="fa-solid fa-plus"></i> Add Admin</button>
+              </div>
+              <div class="table-container">
+                <table id="admins-table">
+                  <thead><tr><th>Name</th><th>Username</th><th>Actions</th></tr></thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+            <div id="set-data" class="tab-content">
+              <p class="mb-4 text-secondary">Manage your local storage data. (Usage: <span id="storage-usage">0</span> KB)</p>
+              <div class="flex gap-4">
+                <button class="btn btn-secondary" style="width:auto" onclick="Settings.exportData()">Export YAML/JSON</button>
+                <button class="btn btn-danger" style="width:auto" onclick="Settings.clearData()">Clear All Data</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- MODALS -->
+  <div class="modal-overlay" id="add-admin-modal">
+    <div class="modal" style="max-width:400px;">
+      <div class="modal-header"><div class="modal-title">Admin Details</div><button class="modal-close" onclick="UI.closeModal('add-admin-modal')"><i class="fa-solid fa-xmark"></i></button></div>
+      <div class="modal-body">
+        <form id="admin-form" onsubmit="event.preventDefault(); Settings.saveAdmin();">
+          <input type="hidden" id="adm-idx">
+          <div class="form-group"><label>Name *</label><input type="text" id="adm-name" class="form-control" required></div>
+          <div class="form-group"><label>Username *</label><input type="text" id="adm-user" class="form-control" required></div>
+          <div class="form-group"><label>Password *</label><input type="password" id="adm-pass" class="form-control" required></div>
+        </form>
+      </div>
+      <div class="modal-footer"><button class="btn btn-secondary" style="width:auto" onclick="UI.closeModal('add-admin-modal')">Cancel</button><button class="btn btn-primary" style="width:auto" onclick="Settings.saveAdmin()">Save</button></div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="add-member-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title" id="member-modal-title">Add Member</div>
+        <button class="modal-close" onclick="UI.closeModal('add-member-modal')"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <form id="member-form" onsubmit="event.preventDefault(); Members.save();">
+          <input type="hidden" id="mem-id">
+          <div class="flex gap-4 mb-4">
+            <div style="width:100px; height:100px; border-radius:8px; border:1px dashed var(--border); display:flex; align-items:center; justify-content:center; overflow:hidden;" class="bg-input">
+              <img id="mem-photo-preview" src="" style="width:100%; height:100%; object-fit:cover; display:none;">
+              <span id="mem-photo-placeholder"><i class="fa-solid fa-camera"></i></span>
+            </div>
+            <div style="flex:1">
+              <label class="mb-4" style="display:block; font-size:12px; color:var(--text-secondary)">Upload Photo</label>
+              <input type="file" id="mem-photo" accept="image/*" class="form-control" onchange="Members.previewPhoto(event)">
+            </div>
+          </div>
+          <div class="grid grid-cols-2">
+            <div class="form-group"><label>Full Name *</label><input type="text" id="mem-name" class="form-control" required></div>
+            <div class="form-group"><label>Phone *</label><input type="text" id="mem-phone" class="form-control" required></div>
+            <div class="form-group"><label>Email *</label><input type="email" id="mem-email" class="form-control" required></div>
+            <div class="form-group">
+              <label>Gender *</label>
+              <select id="mem-gender" class="form-control" required>
+                <option value="Male">Male</option><option value="Female">Female</option><option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="form-group"><label>Age *</label><input type="number" id="mem-age" class="form-control" min="10" max="100" required></div>
+            <div class="form-group">
+              <label>Plan *</label>
+              <select id="mem-plan" class="form-control" required onchange="Members.autoCalcEndDate()"></select>
+            </div>
+            <div class="form-group"><label>Start Date *</label><input type="date" id="mem-start" class="form-control" required onchange="Members.autoCalcEndDate()"></div>
+            <div class="form-group"><label>End Date *</label><input type="date" id="mem-end" class="form-control" required></div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" style="width:auto;" onclick="UI.closeModal('add-member-modal')">Cancel</button>
+        <button class="btn btn-primary" style="width:auto;" onclick="Members.save()">Save Member</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="plan-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title" id="plan-modal-title">Add Plan</div>
+        <button class="modal-close" onclick="UI.closeModal('plan-modal')"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <form id="plan-form" onsubmit="event.preventDefault(); Plans.save();">
+          <input type="hidden" id="plan-id">
+          <div class="form-group"><label>Plan Name *</label><input type="text" id="pl-name" class="form-control" required></div>
+          <div class="grid grid-cols-2">
+            <div class="form-group"><label>Duration (days) *</label><input type="number" id="pl-dur" class="form-control" required></div>
+            <div class="form-group"><label>Price *</label><input type="number" id="pl-price" class="form-control" required></div>
+          </div>
+          <div class="form-group"><label>Color Hex *</label><input type="color" id="pl-color" class="form-control" value="#6c63ff" required style="padding:0; height:40px;"></div>
+          <div class="form-group"><label>Features (comma separated)</label><textarea id="pl-feat" class="form-control" rows="3"></textarea></div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" style="width:auto;" onclick="UI.closeModal('plan-modal')">Cancel</button>
+        <button class="btn btn-primary" style="width:auto;" onclick="Plans.save()">Save Plan</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="payment-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title">Record Payment</div>
+        <button class="modal-close" onclick="UI.closeModal('payment-modal')"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <form id="payment-form" onsubmit="event.preventDefault(); Payments.save();">
+          <div class="form-group">
+            <label>Member *</label>
+            <select id="pay-mem" class="form-control" required onchange="Payments.autoFill()"></select>
+          </div>
+          <div class="grid grid-cols-2">
+            <div class="form-group"><label>Amount *</label><input type="number" id="pay-amt" class="form-control" required></div>
+            <div class="form-group"><label>Date *</label><input type="date" id="pay-date" class="form-control" required></div>
+            <div class="form-group">
+              <label>Method</label>
+              <select id="pay-method" class="form-control">
+                <option>M-Pesa</option><option>Cash</option><option>Card</option><option>Bank Transfer</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Status</label>
+              <select id="pay-stat" class="form-control">
+                <option>Paid</option><option>Pending</option><option>Overdue</option>
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" style="width:auto;" onclick="UI.closeModal('payment-modal')">Cancel</button>
+        <button class="btn btn-primary" style="width:auto;" onclick="Payments.save()">Save Payment</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="add-item-modal">
+    <div class="modal">
+      <div class="modal-header"><div class="modal-title">Add Store Item</div><button class="modal-close" onclick="UI.closeModal('add-item-modal')"><i class="fa-solid fa-xmark"></i></button></div>
+      <div class="modal-body">
+        <form id="item-form" onsubmit="event.preventDefault(); Shop.saveItem();">
+          <input type="hidden" id="item-id">
+          <div class="form-group"><label>Name *</label><input type="text" id="item-name" class="form-control" required></div>
+          <div class="grid grid-cols-2">
+            <div class="form-group"><label>Price (Ksh) *</label><input type="number" id="item-price" class="form-control" required></div>
+            <div class="form-group"><label>Initial Stock *</label><input type="number" id="item-stock" class="form-control" required></div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer"><button class="btn btn-secondary" style="width:auto;" onclick="UI.closeModal('add-item-modal')">Cancel</button><button class="btn btn-primary" style="width:auto;" onclick="Shop.saveItem()">Save Item</button></div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="add-class-modal">
+    <div class="modal">
+      <div class="modal-header"><div class="modal-title">Schedule Class</div><button class="modal-close" onclick="UI.closeModal('add-class-modal')"><i class="fa-solid fa-xmark"></i></button></div>
+      <div class="modal-body">
+        <form id="class-form" onsubmit="event.preventDefault(); Classes.save();">
+          <input type="hidden" id="class-id">
+          <div class="form-group"><label>Class Name *</label><input type="text" id="class-name" class="form-control" required></div>
+          <div class="grid grid-cols-2">
+            <div class="form-group"><label>Day of Week *</label><select id="class-day" class="form-control"><option>Mon</option><option>Tue</option><option>Wed</option><option>Thu</option><option>Fri</option><option>Sat</option><option>Sun</option></select></div>
+            <div class="form-group"><label>Time *</label><input type="time" id="class-time" class="form-control" required></div>
+            <div class="form-group"><label>Trainer Name</label><input type="text" id="class-trainer" class="form-control"></div>
+            <div class="form-group"><label>Class Color</label><input type="color" id="class-color" class="form-control" style="padding:0; height:40px;" value="#6c63ff"></div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer"><button class="btn btn-secondary" style="width:auto;" onclick="UI.closeModal('add-class-modal')">Cancel</button><button class="btn btn-primary" style="width:auto;" onclick="Classes.save()">Save Class</button></div>
+    </div>
+  </div>
+
+  <!-- Print Area (Hidden normally) -->
+  <div id="invoice-print-area" style="display:none; padding:40px; background:#fff; color:#000;">
+    <div style="display:flex; justify-content:space-between; border-bottom:2px solid #eee; padding-bottom:20px; margin-bottom:20px;">
+      <div>
+        <h1 style="margin:0; font-size:24px;" id="inv-gym-name">Gym Name</h1>
+        <p style="margin:0; color:#666;" id="inv-gym-tag">Gym Tagline</p>
+      </div>
+      <div style="text-align:right;">
+        <h1 style="margin:0; font-size:24px; color:#333;">INVOICE</h1>
+        <p style="margin:0; color:#666;" id="inv-no">#GYM-0000</p>
+      </div>
+    </div>
+    <div style="display:flex; justify-content:space-between; margin-bottom:40px;">
+      <div>
+        <h3 style="margin-bottom:8px;">Bill To:</h3>
+        <div id="inv-mem" style="font-size:16px; font-weight:bold;">Member Name</div>
+      </div>
+      <div style="text-align:right;">
+        <p><strong>Date:</strong> <span id="inv-date"></span></p>
+        <p><strong>Status:</strong> <span id="inv-status"></span></p>
+        <p><strong>Method:</strong> <span id="inv-method"></span></p>
+      </div>
+    </div>
+    <table style="width:100%; border-collapse:collapse; margin-bottom:40px;">
+      <thead><tr style="background:#f5f5f5;"><th style="padding:12px; text-align:left; border-bottom:1px solid #ddd;">Description</th><th style="padding:12px; text-align:right; border-bottom:1px solid #ddd;">Amount</th></tr></thead>
+      <tbody><tr><td style="padding:12px; border-bottom:1px solid #eee;" id="inv-desc">Plan Name</td><td style="padding:12px; text-align:right; border-bottom:1px solid #eee;" id="inv-amt">Ksh 0.00</td></tr></tbody>
+      <tfoot><tr><td style="padding:12px; text-align:right; font-weight:bold; border-top:2px solid #ddd;">Total:</td><td style="padding:12px; text-align:right; font-weight:bold; border-top:2px solid #ddd;" id="inv-total">Ksh 0.00</td></tr></tfoot>
+    </table>
+  </div>
+
+  <div class="toast-container" id="toast-container"></div>
+
+  <script id="injected-js"></script>
+</body>
+</html>
